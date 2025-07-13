@@ -5,6 +5,12 @@ on:
     types: [completed]
     
 
+permissions:
+  security-events: write
+  actions: read
+  contents: read
+
+
 jobs:
   Trivy-scan:
     name: Run Trivy Vulnerability Scan
