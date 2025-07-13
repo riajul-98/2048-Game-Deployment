@@ -12,3 +12,7 @@ variable "route_table_cidr" {
   type        = string
   description = "CIDR block for route table"
 }
+
+variable "instance_types" {
+  type = list(string)
+}
