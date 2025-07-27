@@ -1,6 +1,6 @@
 resource "aws_iam_role" "cluster_role" {
-    name = "eks-cluster-example"
-    assume_role_policy = jsonencode({
+  name = "eks-cluster-example"
+  assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
       {
@@ -54,4 +54,36 @@ resource "aws_iam_role_policy_attachment" "example-AmazonEKS_CNI_Policy" {
 resource "aws_iam_role_policy_attachment" "example-AmazonEC2ContainerRegistryReadOnly" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
   role       = aws_iam_role.node_role.name
+}
+
+module "cert_manager_irsa_role" {
+  source                        = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
+  version                       = "5.2.0"
+  role_name                     = "cert-manager"
+  attach_cert_manager_policy    = true
+  cert_manager_hosted_zone_arns = var.hosted_zone
+  oidc_providers = {
+    eks = {
+      provider_arn               = var.eks_oidc_provider
+      namespace_service_accounts = ["cert-manager:cert-manager"]
+    }
+  }
+  tags = local.tags
+}
+
+## External DNS IRSA
+
+module "external_dns_irsa_role" {
+  source                        = "terraform-aws-modules/iam/aws//modules/iam-role-for-service-accounts-eks"
+  version                       = "5.2.0"
+  role_name                     = "external-dns"
+  attach_external_dns_policy    = true
+  external_dns_hosted_zone_arns = var.hosted_zone
+  oidc_providers = {
+    eks = {
+      provider_arn               = var.eks_oidc_provider
+      namespace_service_accounts = ["external-dns:external-dns"]
+    }
+  }
+  tags = local.tags
 }

@@ -16,3 +16,11 @@ variable "route_table_cidr" {
 variable "instance_types" {
   type = list(string)
 }
+
+# variable "external_dns_irsa_role_arn" {
+#   type = string
+# }
+
+variable "hosted_zone" {
+  type = list(string)
+}
