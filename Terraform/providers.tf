@@ -1,4 +1,5 @@
 terraform {
+  required_version = "1.12.2"
   required_providers {
     # Initiate AWS provider
     aws = {
@@ -10,21 +11,28 @@ terraform {
       source  = "hashicorp/helm"
       version = "3.0.2"
     }
+
+    tls = {
+      source  = "hashicorp/tls"
+      version = "4.1.0"
+    }
+
   }
 
   backend "s3" {
     # Initiate S3 bucket as backend
-    bucket = "eks-2048"
-    region = "eu-west-2"
-    key    = "terraform.tfstate"
+    bucket       = "eks-2048"
+    region       = "eu-west-2"
+    key          = "terraform.tfstate"
     use_lockfile = true
-    encrypt = true
+    encrypt      = true
   }
 }
 
 provider "aws" {
   region = "eu-west-2"
 }
+
 
 provider "helm" {
   kubernetes = {

@@ -22,6 +22,6 @@ module "iam" {
 module "helm" {
   source                     = "./modules/helm"
   external_dns_irsa_role_arn = module.iam.external_dns_irsa_role_arn
-  node_group = module.eks.node_group
-  cluster_name = module.eks.cluster_name
+  node_group                 = module.eks.node_group
+  cluster_name               = module.eks.cluster_name
 }

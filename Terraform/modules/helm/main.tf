@@ -5,7 +5,7 @@ resource "helm_release" "nginx" {
 
   create_namespace = true
   namespace        = "nginx-ingress"
-  depends_on = [ var.node_group ]
+  depends_on       = [var.node_group]
 }
 
 resource "helm_release" "cert-manager" {
@@ -26,7 +26,7 @@ resource "helm_release" "cert-manager" {
   values = [
     "${file("../helm-values/cert-manager.yaml")}"
   ]
-  depends_on = [ helm_release.nginx ]
+  depends_on = [helm_release.nginx]
 }
 
 resource "helm_release" "external_dns" {
@@ -47,7 +47,7 @@ resource "helm_release" "external_dns" {
   values = [
     "${file("../helm-values/external-dns.yaml")}"
   ]
-  depends_on = [ helm_release.nginx ]
+  depends_on = [helm_release.nginx]
 }
 
 resource "null_resource" "apply_kubeconfig" {
@@ -59,7 +59,7 @@ resource "null_resource" "apply_kubeconfig" {
     always_run = timestamp()
   }
 
-  depends_on = [ helm_release.nginx ]
+  depends_on = [helm_release.nginx]
 }
 
 resource "null_resource" "apply_cert_issuer" {
@@ -71,14 +71,14 @@ resource "null_resource" "apply_cert_issuer" {
     always_run = timestamp()
   }
 
-  depends_on = [ null_resource.apply_kubeconfig ]
+  depends_on = [null_resource.apply_kubeconfig]
 }
 
 
 resource "helm_release" "argocd_deploy" {
-  name             = "argocd"
-  repository       = "https://argoproj.github.io/argo-helm"
-  chart            = "argo-cd"
+  name       = "argocd"
+  repository = "https://argoproj.github.io/argo-helm"
+  chart      = "argo-cd"
   # timeout          = "600"
   namespace        = "argo-cd"
   create_namespace = true
@@ -87,5 +87,5 @@ resource "helm_release" "argocd_deploy" {
     "${file("../helm-values/argocd.yaml")}"
   ]
 
-  depends_on = [ helm_release.external_dns, helm_release.cert-manager, helm_release.nginx, null_resource.apply_cert_issuer ]
+  depends_on = [helm_release.external_dns, helm_release.cert-manager, helm_release.nginx, null_resource.apply_cert_issuer]
 }
