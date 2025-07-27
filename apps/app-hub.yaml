@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: 2046-game-deploy
+  labels:
+    app: 2046-game
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: 2046-game
+  template:
+    metadata:
+      labels:
+        app: 2046-game
+    spec:
+      containers:
+      - name: 2046-game
+        image: 706490763179.dkr.ecr.eu-west-2.amazonaws.com/2048-game
+        ports:
+        - containerPort: 3000
+
+--- 
+
+apiVersion: v1 
+kind: Service
+metadata:
+  name: 2046-service
+spec:
+  selector:
+    app: 2046-game
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 80
+    targetPort: 3000
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: banking-app-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: "issuer"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: game.eks.riajul-devops.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: banking-app
+            port: 
+              number: 80
+  tls:
+  - hosts:
+    - game.eks.riajul-devops.com
+    secretName: 2046-app-tls

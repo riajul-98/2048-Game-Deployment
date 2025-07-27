@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: apps
+  namespace: argo-cd 
+spec:
+  project: default
+
+  source:
+    repoURL: "https://github.com/riajul-98/2048-Game-Deployment"
+    targetRevision: HEAD
+    path: apps
+
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: apps
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
