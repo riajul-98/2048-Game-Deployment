@@ -15,6 +15,7 @@ resource "helm_release" "cert-manager" {
 
   create_namespace = true
   namespace        = "cert-manager"
+  timeout          = "600"
 
   set = [
     {
@@ -71,7 +72,7 @@ resource "null_resource" "apply_cert_issuer" {
     always_run = timestamp()
   }
 
-  depends_on = [null_resource.apply_kubeconfig]
+  depends_on = [null_resource.apply_kubeconfig, helm_release.cert-manager, helm_release.external_dns]
 }
 
 
@@ -88,4 +89,16 @@ resource "helm_release" "argocd_deploy" {
   ]
 
   depends_on = [helm_release.external_dns, helm_release.cert-manager, helm_release.nginx, null_resource.apply_cert_issuer]
+}
+
+resource "null_resource" "deploy_argo_cd_app" {
+  provisioner "local-exec" {
+    command = "kubectl apply -f \"${path.root}/../argo-cd/apps-argo.yaml\""
+  }
+
+  triggers = {
+    always_run = timestamp()
+  }
+
+  depends_on = [helm_release.argocd_deploy]
 }
