@@ -1,9 +1,7 @@
 resource "aws_eks_cluster" "project_cluster" {
   name = local.cluster_name
   vpc_config {
-    subnet_ids              = var.private_subnet_ids
-    endpoint_private_access = true
-    endpoint_public_access  = false
+    subnet_ids = var.private_subnet_ids
   }
   role_arn = var.cluster_role_arn
   tags     = local.tags

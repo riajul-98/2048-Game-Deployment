@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: 2048-game-deploy
+  name: game-deploy
   labels:
-    app: 2048-game
+    app: game-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: 2048-game
+      app: game-pods
   template:
     metadata:
       labels:
-        app: 2048-game
+        app: game-pods
     spec:
       containers:
-      - name: 2048-game
+      - name: game-2048
         image: 706490763179.dkr.ecr.eu-west-2.amazonaws.com/2048-game
         ports:
         - containerPort: 3000
@@ -25,10 +25,10 @@ spec:
 apiVersion: v1 
 kind: Service
 metadata:
-  name: 2048-service
+  name: game-2048-service
 spec:
   selector:
-    app: 2048-game
+    app: game-pods
   type: ClusterIP
   ports:
   - name: http
@@ -40,7 +40,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: banking-app-ingress
+  name: game-ingress
   annotations:
     cert-manager.io/cluster-issuer: "issuer"
 spec:
@@ -53,10 +53,10 @@ spec:
         path: "/"
         backend:
           service:
-            name: banking-app
+            name: game-2048-service
             port: 
               number: 80
   tls:
   - hosts:
     - game.eks.riajul-devops.com
-    secretName: 2048-app-tls
+    secretName: game-app-tls
