@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: 2046-game-deploy
+  name: 2048-game-deploy
   labels:
-    app: 2046-game
+    app: 2048-game
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: 2046-game
+      app: 2048-game
   template:
     metadata:
       labels:
-        app: 2046-game
+        app: 2048-game
     spec:
       containers:
-      - name: 2046-game
+      - name: 2048-game
         image: 706490763179.dkr.ecr.eu-west-2.amazonaws.com/2048-game
         ports:
         - containerPort: 3000
@@ -25,10 +25,10 @@ spec:
 apiVersion: v1 
 kind: Service
 metadata:
-  name: 2046-service
+  name: 2048-service
 spec:
   selector:
-    app: 2046-game
+    app: 2048-game
   type: ClusterIP
   ports:
   - name: http
@@ -59,4 +59,4 @@ spec:
   tls:
   - hosts:
     - game.eks.riajul-devops.com
-    secretName: 2046-app-tls
+    secretName: 2048-app-tls
