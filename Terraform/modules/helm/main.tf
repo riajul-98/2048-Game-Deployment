@@ -102,3 +102,18 @@ resource "null_resource" "deploy_argo_cd_app" {
 
   depends_on = [helm_release.argocd_deploy]
 }
+
+resource "helm_release" "prometheus" {
+  name = "prometheus"
+  repository = "https://prometheus-community.github.io/helm-charts"
+  chart = "kube-prometheus-stack"
+  
+  namespace = "prometheus"
+  create_namespace = true
+
+  values = [
+    "${file("../helm-values/prometheus-stack.yaml")}"
+  ]
+
+  depends_on = [ null_resource.deploy_argo_cd_app ]
+}
