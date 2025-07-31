@@ -62,7 +62,7 @@ jobs:
     defaults:
 
       run:
-        working-directory: terraform
+        working-directory: Terraform
 
     steps:
 
