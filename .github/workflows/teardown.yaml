@@ -21,8 +21,8 @@ jobs:
       - name: helm uninstall
         run: ./cleanup.sh
         env:
-          REGION: ${{ vars.region }}
-          CLUSTER_NAME: ${{ vars.cluster_name }}
+          REGION: ${{ vars.REGION }}
+          CLUSTER_NAME: ${{ vars.CLUSTER_NAME }}
 
 
     terraform_destroy:
