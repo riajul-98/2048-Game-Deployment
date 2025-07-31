@@ -1,6 +1,6 @@
 #!/bin/bash
 
-aws eks --region ${ env.REGION } update-kubeconfig --name ${ env.CLUSTER_NAME }
+aws eks --region "$REGION" update-kubeconfig --name "$CLUSTER_NAME"
 
 # Delete Helm releases
 helm uninstall prometheus -n prometheus
