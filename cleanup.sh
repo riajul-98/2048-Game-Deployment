@@ -1,7 +1,5 @@
 #!/bin/bash
 
-cd terraform
-
 aws eks --region ${ env.REGION } update-kubeconfig --name ${ env.CLUSTER_NAME }
 
 # Delete Helm releases
