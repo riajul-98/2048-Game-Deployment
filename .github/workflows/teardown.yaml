@@ -15,7 +15,7 @@ jobs:
       steps:
 
       - name: Make cleanup script executable
-        run: chmod +x scripts/cleanup.sh
+        run: chmod +x ./scripts/cleanup.sh
         
 
       - name: Checkout the repository to the runner
@@ -23,7 +23,7 @@ jobs:
 
 
       - name: helm uninstall
-        run: .scripts/cleanup.sh
+        run: ./scripts/cleanup.sh
         env:
           REGION: ${{ vars.REGION }}
           CLUSTER_NAME: ${{ vars.CLUSTER_NAME }}
