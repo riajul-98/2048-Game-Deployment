@@ -1,0 +1,58 @@
+name: terraform-deploy
+on: 
+  workflow_dispatch:
+
+jobs:
+
+  terraform-setup:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: terraform
+
+    steps:
+
+
+      - name: Checkout the repository to the runner
+        uses: actions/checkout@v3
+
+
+      - name: Terraform init
+        id: init
+        run: terraform init
+
+
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check
+        continue-on-error: true
+
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color -input=false
+        continue-on-error: false
+
+
+  terraform-apply:    
+    needs: terraform-setup
+    runs-on: ubuntu-latest
+    defaults:
+
+      run:
+        working-directory: terraform
+
+    steps:
+
+
+      - name: Checkout the repository
+        uses: actions/checkout@v3
+
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve

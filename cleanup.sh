@@ -2,6 +2,8 @@
 
 cd terraform
 
+aws eks --region ${ env.REGION } update-kubeconfig --name ${ env.CLUSTER_NAME }
+
 # Delete Helm releases
 helm uninstall prometheus -n prometheus
 helm uninstall argocd -n argo-cd
