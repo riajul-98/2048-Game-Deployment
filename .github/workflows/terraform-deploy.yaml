@@ -47,10 +47,10 @@ jobs:
       - name: Terraform Plan
         id: plan
         env:
-          TF_VAR_vpc_cidr_block: ${{ env.vpc_cidr_block }}
-          TF_VAR_subnet_cidr_blocks: ${{ env.subnet_cidr_blocks }}
-          TF_VAR_route_table_cidr: ${{ env.route_table_cidr }}
-          TF_VAR_instance_types: ${{ env.instance_types }}
+          TF_VAR_vpc_cidr_block: ${{ vars.vpc_cidr_block }}
+          TF_VAR_subnet_cidr_blocks: ${{ vars.subnet_cidr_blocks }}
+          TF_VAR_route_table_cidr: ${{ vars.route_table_cidr }}
+          TF_VAR_instance_types: ${{ vars.instance_types }}
           TF_VAR_hosted_zone: ${{ secrets.hosted_zone }}
         run: terraform plan -no-color -input=false
         continue-on-error: false
@@ -73,9 +73,9 @@ jobs:
 
       - name: Terraform Apply
         env:
-          TF_VAR_vpc_cidr_block: ${{ env.vpc_cidr_block }}
-          TF_VAR_subnet_cidr_blocks: ${{ env.subnet_cidr_blocks }}
-          TF_VAR_route_table_cidr: ${{ env.route_table_cidr }}
-          TF_VAR_instance_types: ${{ env.instance_types }}
+          TF_VAR_vpc_cidr_block: ${{ vars.vpc_cidr_block }}
+          TF_VAR_subnet_cidr_blocks: ${{ vars.subnet_cidr_blocks }}
+          TF_VAR_route_table_cidr: ${{ vars.route_table_cidr }}
+          TF_VAR_instance_types: ${{ vars.instance_types }}
           TF_VAR_hosted_zone: ${{ secrets.hosted_zone }}
         run: terraform apply -auto-approve
