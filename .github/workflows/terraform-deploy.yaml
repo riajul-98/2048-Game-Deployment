@@ -77,6 +77,11 @@ jobs:
           terraform_version: 1.12.2
 
 
+      - name: Terraform init
+        id: init
+        run: terraform init
+
+
       - name: Terraform Apply
         env:
           TF_VAR_vpc_cidr_block: ${{ vars.vpc_cidr_block }}
