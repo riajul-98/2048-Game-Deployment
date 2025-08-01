@@ -135,7 +135,7 @@ This project deploys a containerised 2048 game to an EKS cluster using ArgoCD. T
 
     ![alt text](assets/2048-game.gif)
 
-9. Once you are done with the application and wish to tear it down, run the teardown pipeline. This is also a manual triggered pipeline.cd
+9. Once you are done with the application and wish to tear it down, run the teardown pipeline. This is also a manual triggered pipeline.
 
 ## Potential Issues
 - Site not reachable: If you have deployed the application more than once, you might get "This site can’t be reached" when trying to reach the application. This is due Lets Encrypt having a rate limit of 1 certificate per subdomain per day.
