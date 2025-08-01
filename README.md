@@ -1,8 +1,8 @@
 # 2048-Game-Deployment
-This project deploys a Dockerised 2048 game to an EKS cluster using ArgoCD. Terraform was used to provision infrastructure and GitHub Actions used to automate Docker Image build and deployment to ECR. Prometheus and Grafana used to monitor metrics (installed using Helm).
+This project deploys a containerised 2048 game to an EKS cluster using ArgoCD. Terraform was used to provision infrastructure and GitHub Actions used to automate Docker Image build and deployment to ECR. Prometheus and Grafana used to monitor metrics (installed using Helm).
 
 ## Architecture Diagram
-![alt text](<./images/architecture.png>)
+![alt text](<./assets/architecture.png>)
 
 ## Pre-requisites
 - AWS account.
@@ -133,9 +133,9 @@ This project deploys a Dockerised 2048 game to an EKS cluster using ArgoCD. Terr
 
     ### Game
 
-    <video controls src="assets/2048-game.mp4" title="2048-Game"></video>
+    ![alt text](assets/2048-game.gif)
 
-9. Once you are done with the application and wish to tear it down, run the teardown pipeline. This is also a manual triggered pipeline.
+9. Once you are done with the application and wish to tear it down, run the teardown pipeline. This is also a manual triggered pipeline.cd
 
 ## Potential Issues
 - Site not reachable: If you have deployed the application more than once, you might get "This site can’t be reached" when trying to reach the application. This is due Lets Encrypt having a rate limit of 1 certificate per subdomain per day.
