@@ -55,3 +55,9 @@ jobs:
 
       - name: Terraform Destroy
         run: terraform destroy -auto-approve
+        env:
+          TF_VAR_vpc_cidr_block: ${{ vars.vpc_cidr_block }}
+          TF_VAR_subnet_cidr_blocks: ${{ vars.subnet_cidr_blocks }}
+          TF_VAR_route_table_cidr: ${{ vars.route_table_cidr }}
+          TF_VAR_instance_types: ${{ vars.instance_types }}
+          TF_VAR_hosted_zone: ${{ secrets.hosted_zone }}
