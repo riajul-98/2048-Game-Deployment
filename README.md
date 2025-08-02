@@ -1,5 +1,5 @@
 # 2048-Game-Deployment
-This project deploys a containerised 2048 game to an EKS cluster using ArgoCD. Terraform was used to provision infrastructure and GitHub Actions used to automate Docker Image build and deployment to ECR. Prometheus and Grafana used to monitor metrics (installed using Helm).
+This project deploys a containerised 2048 game to an EKS cluster using ArgoCD. Terraform was used to provision infrastructure and GitHub Actions used to automate Docker Image build and deployment to ECR. Prometheus and Grafana used to monitor metrics (installed using Helm). All secured using Trivy Vulnerability Scanner, TFLint (pre-commit hooks) and Checkov.
 
 ## Architecture Diagram
 ![alt text](<./assets/architecture.png>)
@@ -7,8 +7,7 @@ This project deploys a containerised 2048 game to an EKS cluster using ArgoCD. T
 ## Pre-requisites
 - AWS account.
 - Git installed and configured locally.
-- Terraform installed locally.
-- AWS Access Keys
+- AWS Access Keys.
 - Route53 Hosted Zone created.
 - kubectl utility and AWS CLI installed locally for troubleshooting.
 
@@ -138,7 +137,7 @@ This project deploys a containerised 2048 game to an EKS cluster using ArgoCD. T
 9. Once you are done with the application and wish to tear it down, run the teardown pipeline. This is also a manual triggered pipeline.
 
 ## Potential Issues
-- Site not reachable: If you have deployed the application more than once, you might get "This site can’t be reached" when trying to reach the application. This is due Lets Encrypt having a rate limit of 1 certificate per subdomain per day.
+- Site not reachable: If you have deployed the application more than once, you might get "This site can’t be reached" when trying to reach the application. This is due to Lets Encrypt having a rate limit of 1 certificate per subdomain per day.
 - CI/CD pipeline failing: 
     - You might have incorrectly added secrets and variables. Check the GitHub Actions secrets and variables tab.
     - You might have forgotten to change something in one of the yaml files like hostedZone or the domain.
