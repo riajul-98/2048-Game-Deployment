@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 aws eks --region "$REGION" update-kubeconfig --name "$CLUSTER_NAME"
 
 # Delete Helm releases
